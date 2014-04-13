@@ -33,17 +33,16 @@ private:
     QVector<QGraphicsEllipseItem*> circles;
 
     AlgorithmRunner *mAR;
-//    QVector<Person*> people;
 
 public slots:
     void onChangePosition(int, int);
-//    void onRun(int, int);
-//    void onEnterCS(int);
-//    void onSendAwk(int, int);
 
 private slots:
     void on_btn_start_clicked();
-    void on_btn_stop_clicked();
+    void on_rd_Ricart_toggled(bool checked);
+    void on_rd_Two_toggled(bool checked);
+    void on_slider_speed_sliderMoved(int position);
+    void on_chk_random_toggled(bool checked);
 };
 
 #endif // WIDGET_H

@@ -17,11 +17,14 @@ class Person : public QThread
     Q_OBJECT
 public:
     static int PEOPLE_TOTAL;
+    static int ALG_MODE;
+    static int SPEED;
     int mId;
+    int mDirection;
+    int mSpeed;
     QPoint mPosition;
     bool mInCS;
     bool mIsWaiting;
-    int mDirection;
     bool mStop;
 
     QVector<int> *awks;
@@ -32,7 +35,6 @@ public:
 
     int getDir();
     void setDir();
-    void setPos(int x, int y);
 
     bool isInCS();
     void requestCS();
@@ -40,12 +42,12 @@ public:
     void respondToReq();
 signals:
     void ChangePosition(int, int);
-    void SendRequest(int);
+    void SendRequest(int,int);
     void SendAwk(int, int);
     void EnterCS(int);
 
 public slots:
-    void ReceiveRequest(int);
+    void ReceiveRequest(int,int);
 
 
 };

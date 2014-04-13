@@ -2,6 +2,10 @@
 #include <QtCore>
 
 int Person::PEOPLE_TOTAL(0);
+int Person::ALG_MODE(1);
+int Person::SPEED(5);
+//ALG_MODE=1 : Ricart
+//ALG_MODE=2 : Two-by-Two
 
 extern QVector<int> tRequests;
 extern QVector<int> tAwks;
@@ -14,11 +18,37 @@ Person::Person(int tId, QPoint pos, QObject *parent) :
     this->mIsWaiting = false;
     this->mPosition = pos;
     this->setDir();
+    this->mSpeed = 5;   //TODO Default to slider position.
     this->mStop = false;
     this->requests = new QVector<int>();
     this->awks = new QVector<int>();
 }
+//-------------------- SLOTS Start --------------------
+void Person::ReceiveRequest(int reqId, int reqDir) {
 
+    if(ALG_MODE == 2 && reqId != this->mId){
+        if(this->requests->isEmpty() && (this->getDir() == reqDir)) {
+            emit this->SendAwk(this->mId, reqId);
+            return;
+        }
+    }
+
+    tRequests.push_back(reqId);
+    if(!this->requests->contains(reqId)){
+        this->requests->push_back(reqId);
+    }
+
+    if((!this->isInCS() && !this->mIsWaiting) || (this->mId == reqId && this->mIsWaiting)){
+        this->respondToReq();
+    }
+
+}
+
+//-------------------- SLOTS End --------------------
+
+
+
+//-------------------- FUNCTIONS Start --------------------
 void Person::run() {
     this->mStop = false;
     this->mInCS = true;
@@ -34,14 +64,14 @@ void Person::run() {
         mutex.unlock();
 
         this->mPosition += QPoint(this->mDirection, 0);
-//        qDebug(qPrintable(QString::number(mPosition.x())));
 
         emit this->ChangePosition(this->mId, this->mDirection);
-        this->msleep(5);
+        mutex.lock();
+        this->msleep(SPEED);
+        mutex.unlock();
     }
     this->mInCS = false;
-
-    //qDebug(this->mId + ": Leaving CS, sending AWKs.");
+    this->setDir();
     this->respondToReq();
 }
 
@@ -62,11 +92,6 @@ void Person::setDir() {
     }
 }
 
-void Person::setPos(int x, int y) {
-    this->mPosition.setX(x);
-    this->mPosition.setY(y);
-}
-
 bool Person::isInCS() {
     QMutex m;
     m.lock();
@@ -78,14 +103,13 @@ bool Person::isInCS() {
 }
 //Request the CS from all other people
 void Person::requestCS() {
-    //qDebug(this->mId + ": Sending requests to enter CS");
     if(!this->isInCS() && !this->mIsWaiting){
         this->mIsWaiting = true;
 
         for(int i = 0; i<PEOPLE_TOTAL; i++){
             this->awks->push_back(i);
         }
-        emit this->SendRequest(this->mId);
+        emit this->SendRequest(this->mId, this->getDir());
     }
 }
 
@@ -100,29 +124,14 @@ void Person::receiveAwk(int awkId) {
     }
     if(this->awks->isEmpty()) {
         this->mIsWaiting = false;
-      // qDebug(this->mId + ": Sending requests to enter CS");
         emit this->EnterCS(this->mId);
     }
 }
 
-
-void Person::ReceiveRequest(int reqId) {
-    tRequests.push_back(reqId);
-    //qDebug(this->mId + ": Request received from: " + id);
-    if(!this->requests->contains(reqId)){
-        this->requests->push_back(reqId);
-    }
-
-    if((!this->isInCS() && !this->mIsWaiting) || (this->mId == reqId && this->mIsWaiting)){
-        //qDebug(this->mId + ": Wasn't in the CS, sending AWK to: " + id);
-        this->respondToReq();
-    }
-
-}
-
 void Person::respondToReq() {
     for(int reqId : *(this->requests)){
-        emit this->SendAwk(mId, reqId);
+        emit this->SendAwk(this->mId, reqId);
     }
     this->requests->clear();
 }
+//-------------------- FUNCTIONS End --------------------

@@ -2,16 +2,19 @@
 <ui version="4.0">
  <class>Widget</class>
  <widget class="QWidget" name="Widget">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>601</width>
-    <height>429</height>
+    <height>424</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>CS384 Project</string>
   </property>
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
@@ -36,78 +39,13 @@
     <string>Start</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_stop">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>350</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Stop</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="z_delta">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>390</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>DeltaX:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="z_id">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>370</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>ID:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lbl_id">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>370</y>
-     <width>91</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>-1</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lbl_delta">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>390</y>
-     <width>111</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>-1</string>
-   </property>
-  </widget>
   <widget class="QRadioButton" name="rd_Ricart">
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>360</y>
+     <y>356</y>
      <width>141</width>
-     <height>17</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
@@ -121,13 +59,70 @@
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>380</y>
+     <y>376</y>
      <width>82</width>
-     <height>17</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
     <string>Two-by-Two</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_speed">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>360</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="singleStep">
+    <number>5</number>
+   </property>
+   <property name="value">
+    <number>5</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_speed">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>380</y>
+     <width>171</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chk_random">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>400</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Random?</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

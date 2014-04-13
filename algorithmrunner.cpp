@@ -3,13 +3,12 @@
 AlgorithmRunner::AlgorithmRunner(QVector<QGraphicsEllipseItem*> tCircleList, QObject *uiParent) :
     QThread()
 {
-
+    mIsRandom = true;
     for(QGraphicsEllipseItem *c : tCircleList){
         QPoint pos = QPoint(c->rect().x(), c->rect().y());
         people.push_back(new Person(tCircleList.indexOf(c), pos, this));
     }
     Person::PEOPLE_TOTAL = people.size();
-
 
     for(Person *p1 : people){
         //Configure each person's one-to-one signals and slots.
@@ -18,17 +17,9 @@ AlgorithmRunner::AlgorithmRunner(QVector<QGraphicsEllipseItem*> tCircleList, QOb
         connect(p1, SIGNAL(ChangePosition(int,int)), uiParent, SLOT(onChangePosition(int,int)));
         for(Person *p2 : people){
             //Configure each person's one-to-many signals and slots.
-            connect(p1, SIGNAL(SendRequest(int)), p2, SLOT(ReceiveRequest(int)));
-//            if(!(people.indexOf(p1) == people.indexOf(p2))) {
-//                connect(p1, SIGNAL(SendRequest(int)), p2, SLOT(ReceiveRequest(int)));
-//            }
+            connect(p1, SIGNAL(SendRequest(int,int)), p2, SLOT(ReceiveRequest(int,int)));
         }
     }
-
-
-
-
-//    c1->setFlag(QGraphicsItem::ItemIsMovable);
 }
 
 //-------------------- SIGNALS Start --------------------
@@ -46,7 +37,12 @@ void AlgorithmRunner::run() {
     QVector<int> indexes;
     for(int j=0; j<people.size(); j++){ indexes.push_back(j); }
 
-    QVector<int> randomInd = this->randomize(indexes);
+    QVector<int> randomInd;
+    if(this->mIsRandom){
+        randomInd = this->randomize(indexes);
+    }else {
+        randomInd = indexes;
+    }
 
     for(int i=0; i<this->people.size(); i++){
         int temp = randomInd[i];
@@ -68,9 +64,12 @@ QVector<int> AlgorithmRunner::randomize(QVector<int> ind) {
     return tVec;
 }
 
-int AlgorithmRunner::rangedRand(unsigned int max){
+int AlgorithmRunner::rangedRand(unsigned int max) {
     return (qrand() % (max));
 }
 
+void AlgorithmRunner::setRandom(bool isRandom) {
+    this->mIsRandom = isRandom;
+}
 
 

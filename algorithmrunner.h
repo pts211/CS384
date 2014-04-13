@@ -14,9 +14,12 @@ class AlgorithmRunner : public QThread
 public:
     explicit AlgorithmRunner(QVector<QGraphicsEllipseItem*> tCircleList, QObject *uiParent);
     void run();
+    void setRandom(bool isRandom);
 
 private:
+    bool mIsRandom;
     QVector<Person*> people;
+
     QVector<int> randomize(QVector<int> ind);
     int rangedRand(unsigned int max);
 
