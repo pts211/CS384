@@ -26,26 +26,26 @@ Widget::Widget(QWidget *parent) :
     circles.push_back(scene->addEllipse(MAX_X, 150, CSIZE, CSIZE, blackpen, blueBrush));
 
 
-    for(QGraphicsEllipseItem *c : circles){
-        QPoint pos = QPoint(c->rect().x(), c->rect().y());
-        people.push_back(new Person(circles.indexOf(c), pos, this));
-    }
-    Person::PEOPLE_TOTAL = people.size();
+//    for(QGraphicsEllipseItem *c : circles){
+//        QPoint pos = QPoint(c->rect().x(), c->rect().y());
+//        people.push_back(new Person(circles.indexOf(c), pos, this));
+//    }
+//    Person::PEOPLE_TOTAL = people.size();
 
 
-    for(Person *p1 : people){
-        //Configure each person's one-to-one signals and slots.
-        connect(p1, SIGNAL(SendAwk(int,int)), this, SLOT(onSendAwk(int,int)));
-        connect(p1, SIGNAL(EnterCS(int)), this, SLOT(onEnterCS(int)));
-        connect(p1, SIGNAL(ChangePosition(int,int)), this, SLOT(onChangePosition(int,int)));
-        for(Person *p2 : people){
-            //Configure each person's one-to-many signals and slots.
-            connect(p1, SIGNAL(SendRequest(int)), p2, SLOT(ReceiveRequest(int)));
-//            if(!(people.indexOf(p1) == people.indexOf(p2))) {
-//                connect(p1, SIGNAL(SendRequest(int)), p2, SLOT(ReceiveRequest(int)));
-//            }
-        }
-    }
+//    for(Person *p1 : people){
+//        //Configure each person's one-to-one signals and slots.
+//        connect(p1, SIGNAL(SendAwk(int,int)), this, SLOT(onSendAwk(int,int)));
+//        connect(p1, SIGNAL(EnterCS(int)), this, SLOT(onEnterCS(int)));
+//        connect(p1, SIGNAL(ChangePosition(int,int)), this, SLOT(onChangePosition(int,int)));
+//        for(Person *p2 : people){
+//            //Configure each person's one-to-many signals and slots.
+//            connect(p1, SIGNAL(SendRequest(int)), p2, SLOT(ReceiveRequest(int)));
+////            if(!(people.indexOf(p1) == people.indexOf(p2))) {
+////                connect(p1, SIGNAL(SendRequest(int)), p2, SLOT(ReceiveRequest(int)));
+////            }
+//        }
+//    }
 
 
 
@@ -61,45 +61,36 @@ void Widget::onChangePosition(int id, int change)
 //    ui->lbl_delta->setText(QString::number(change));
 }
 
-void Widget::onRun(int id, int deltaX)
-{
-    ui->lbl_id->setText(QString::number(id));
-    ui->lbl_delta->setText(QString::number(deltaX));
-}
+//void Widget::onRun(int id, int deltaX)
+//{
+//    ui->lbl_id->setText(QString::number(id));
+//    ui->lbl_delta->setText(QString::number(deltaX));
+//}
 
-void Widget::onSendAwk(int id, int reqId) {
-    people[reqId]->receiveAwk(id);
-}
+//void Widget::onSendAwk(int id, int reqId) {
+//    people[reqId]->receiveAwk(id);
+//}
 
-void Widget::onEnterCS(int id) {
-    people[id]->start();
-}
+//void Widget::onEnterCS(int id) {
+//    people[id]->start();
+//}
 //-------------------- SIGNALS End --------------------
 
-Widget::~Widget()
-{
-    delete ui;
+
+
+
+//-------------------- FUNCTIONS Start --------------------
+QVector<QGraphicsEllipseItem*> Widget::getCircleList() {
+    return this->circles;
 }
+
+//-------------------- FUNCTIONS End --------------------
+
 
 //-------------------- BUTTONS Start --------------------
 void Widget::on_btn_start_clicked()
 {
-    int x = 1;
-    people[0]->requestCS();
-    for(int z=0; z<1000000; z++){
-        x=x*x;
-    }
-    people[3]->requestCS();
-    for(int z=0; z<1000000; z++){
-        x=x*x;
-    }
-    people[2]->requestCS();
-    for(int z=0; z<1000000; z++){
-        x=x*x;
-    }
-    people[1]->requestCS();
-
-//    for(Person *p : people){}
+    mAR->start();
 }
 
 void Widget::on_btn_stop_clicked()
@@ -107,8 +98,11 @@ void Widget::on_btn_stop_clicked()
     QVector<int> *tempReqs = &tRequests;
     QVector<int> *tempAwks = &tAwks;
     qDebug("Hellow World");
-    //for(Person *p : people){
-//        p->mStop = true;
-//    }
 }
 //-------------------- BUTTONS End --------------------
+
+
+Widget::~Widget()
+{
+    delete ui;
+}

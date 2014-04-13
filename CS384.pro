@@ -17,9 +17,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         widget.cpp \
-    person.cpp
+    person.cpp \
+    algorithmrunner.cpp
 
 HEADERS  += widget.h \
-    person.h
+    person.h \
+    algorithmrunner.h
 
 FORMS    += widget.ui

@@ -7,6 +7,7 @@
 #include <QtWidgets>
 
 #include "person.h"
+#include "algorithmrunner.h"
 
 const int CSIZE = 40;
 
@@ -22,19 +23,23 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
-    Person *mPerson;
+    QVector<QGraphicsEllipseItem*> getCircleList();
+
+    void setRunner(AlgorithmRunner *tAR){ mAR = tAR; }
 
 private:
     Ui::Widget *ui;
     QGraphicsScene *scene;
     QVector<QGraphicsEllipseItem*> circles;
-    QVector<Person*> people;
+
+    AlgorithmRunner *mAR;
+//    QVector<Person*> people;
 
 public slots:
     void onChangePosition(int, int);
-    void onRun(int, int);
-    void onEnterCS(int);
-    void onSendAwk(int, int);
+//    void onRun(int, int);
+//    void onEnterCS(int);
+//    void onSendAwk(int, int);
 
 private slots:
     void on_btn_start_clicked();
