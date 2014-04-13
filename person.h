@@ -1,3 +1,8 @@
+//Names: Paul Sites, Tim Kinely, Tiffani Dutton
+//CS 384 Project
+//Algorithm Runner.cpp
+//The purpose of this program is to be the header  for the Algorithms.
+
 #ifndef PERSON_H
 #define PERSON_H
 
