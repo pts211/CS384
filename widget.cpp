@@ -20,8 +20,6 @@ Widget::Widget(QWidget *parent) :
     QPen blackpen(Qt::black);
     blackpen.setWidth((6));
 
-
-
     circles.push_back(scene->addEllipse(MIN_X, 0, CSIZE, CSIZE, blackpen, redBrush));
     circles.push_back(scene->addEllipse(MIN_X, 50,CSIZE, CSIZE, blackpen, redBrush));
     circles.push_back(scene->addEllipse(MAX_X, 100, CSIZE, CSIZE, blackpen, blueBrush));
@@ -55,6 +53,7 @@ Widget::Widget(QWidget *parent) :
 //    c1->setFlag(QGraphicsItem::ItemIsMovable);
 }
 
+//-------------------- SIGNALS Start --------------------
 void Widget::onChangePosition(int id, int change)
 {
     circles[id]->moveBy(change, 0);
@@ -75,12 +74,14 @@ void Widget::onSendAwk(int id, int reqId) {
 void Widget::onEnterCS(int id) {
     people[id]->start();
 }
+//-------------------- SIGNALS End --------------------
 
 Widget::~Widget()
 {
     delete ui;
 }
 
+//-------------------- BUTTONS Start --------------------
 void Widget::on_btn_start_clicked()
 {
     int x = 1;
@@ -110,3 +111,4 @@ void Widget::on_btn_stop_clicked()
 //        p->mStop = true;
 //    }
 }
+//-------------------- BUTTONS End --------------------

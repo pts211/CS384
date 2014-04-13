@@ -113,6 +113,9 @@
    <property name="text">
     <string>Ricart and Agrawalas</string>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QRadioButton" name="rd_Two">
    <property name="geometry">

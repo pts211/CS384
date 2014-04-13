@@ -79,12 +79,14 @@ bool Person::isInCS() {
 //Request the CS from all other people
 void Person::requestCS() {
     //qDebug(this->mId + ": Sending requests to enter CS");
-    this->mIsWaiting = true;
+    if(!this->isInCS() && !this->mIsWaiting){
+        this->mIsWaiting = true;
 
-    for(int i = 0; i<PEOPLE_TOTAL; i++){
-        this->awks->push_back(i);
+        for(int i = 0; i<PEOPLE_TOTAL; i++){
+            this->awks->push_back(i);
+        }
+        emit this->SendRequest(this->mId);
     }
-    emit this->SendRequest(this->mId);
 }
 
 //Accept awk from process
