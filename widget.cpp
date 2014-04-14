@@ -1,7 +1,7 @@
 //Names: Paul Sites, Tim Kinely, Tiffani Dutton
 //CS 384 Project
-//Algorithm Runner.cpp
-//The purpose of this program is to be the runner for the widget.
+//Widget.cpp
+//This class manages the UI of the program.
 
 #include "widget.h"
 #include "ui_widget.h"

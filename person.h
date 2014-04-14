@@ -1,7 +1,7 @@
 //Names: Paul Sites, Tim Kinely, Tiffani Dutton
 //CS 384 Project
-//Algorithm Runner.cpp
-//The purpose of this program is to be the header  for the Algorithms.
+//Person.h
+//This class represents a process, a process will want to get into the CS.
 
 #ifndef PERSON_H
 #define PERSON_H
@@ -11,13 +11,10 @@
 #include <QVector>
 #include <QPoint>
 
-//global variables. 
-
+//global variables.
+//The minimum and maxium x coordinates for the person to be displayed in the UI.
 const int MIN_X = 0;
 const int MAX_X = 400;
-
-//QVector<int> tRequests;
-//QVector<int> tAwks;
 
 class Person : public QThread
 {
@@ -34,10 +31,16 @@ public:
     bool mIsWaiting;
     bool mStop;
 
-    QVector<int> *awks; //vector for the acknowledgements 
-    QVector<int> *requests; //vector for the requests 
+    //Vector for acknowledgements. This vector is populated when the person requests the CS.
+    //As awks are received the vector items are removed. When it is empty all awks have been recieved.
+    QVector<int> *awks;
+
+    //Vector for requests. This vector acts as a stack for receieved requests while in the CS to
+    //handled when the person leaves the CS.
+    QVector<int> *requests;
 
     explicit Person(int id, QPoint pos, QObject *parent = 0);
+
     void run();
 
     //getters and setters 
@@ -45,28 +48,28 @@ public:
     void setDir();
 
     //PRE: none
-    //POST: tells if a person is in the Critical Section
+    //POST: tells if person is in the CS
     bool isInCS();
 
     //PRE: None
     //POST a person requests to go to the CS
     void requestCS();
 
-    //PRE: there exists an id of a person
-    //POST: recieves an ACK from all people
+    //PRE: there exists an id of a person.
+    //POST: recieves an ACK from person with id.
     void receiveAwk(int id);
 
     //PRE:None
-    //POST: sends a request to every person. 
+    //POST: Request the CS from all other people
     void respondToReq();
 signals:
 
-    //PRE: there exists a person that is moving in the critical section
-    //POST: the position of the persons are changed. 
+    //PRE: The person is in the CS and moving.
+    //POST: The persons position is changed in the UI.
     void ChangePosition(int, int);
 
-    //PRE: there exists a process that is being requqested  
-    //post: the requests is sent. 
+    //PRE: The person wants to enter the CS.
+    //post: Requests are sent to all other people. Requests contain the requestor's ID and desired direction.
     void SendRequest(int,int);
 
     //PRE: two integers exists

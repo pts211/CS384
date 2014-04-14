@@ -1,7 +1,7 @@
 //Names: Paul Sites, Tim Kinely, Tiffani Dutton
 //CS 384 Project
-//Algorithm Runner.cpp
-//The purpose of this program is to be the header for the widget.
+//Widget.h
+//This class manages the UI of the program.
 
 #ifndef WIDGET_H
 #define WIDGET_H
@@ -14,6 +14,7 @@
 #include "person.h"
 #include "algorithmrunner.h"
 
+//The size of the circles that represnt a person/process.
 const int CSIZE = 40;
 
 namespace Ui {
@@ -40,6 +41,8 @@ private:
     AlgorithmRunner *mAR;
 
 public slots:
+    //PRE: A person id, the amount to shift the person.
+    //POST: The circle is shifted.
     void onChangePosition(int, int);
 
 private slots:

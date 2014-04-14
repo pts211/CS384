@@ -1,7 +1,7 @@
 //Names: Paul Sites, Tim Kinely, Tiffani Dutton
 //CS 384 Project
 //Algorithm Runner.cpp
-//The purpose of this program is to be the runner for the Algorithms. 
+//This class serves as a worker thread and manages execution of the algorithm.
 
 
 #include "algorithmrunner.h"
@@ -70,14 +70,6 @@ QVector<int> AlgorithmRunner::randomize(QVector<int> ind) {
         ind.removeAt(rindex);
     }
     return tVec;
-}
-
-int AlgorithmRunner::rangedRand(unsigned int max) {
-    return (qrand() % (max));
-}
-
-void AlgorithmRunner::setRandom(bool isRandom) {
-    this->mIsRandom = isRandom;
 }
 
 

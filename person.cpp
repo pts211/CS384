@@ -1,7 +1,7 @@
 //Names: Paul Sites, Tim Kinely, Tiffani Dutton
 //CS 384 Project
-//Algorithm Runner.cpp
-//The purpose of this program is to be the runner for the Person Class.
+//Person.cpp
+//This class represents a process, a process will want to get into the CS.
 
 #include "person.h"
 #include <QtCore>
@@ -11,9 +11,6 @@ int Person::ALG_MODE(1);
 int Person::SPEED(5);
 //ALG_MODE=1 : Ricart
 //ALG_MODE=2 : Two-by-Two
-
-extern QVector<int> tRequests;
-extern QVector<int> tAwks;
 
 Person::Person(int tId, QPoint pos, QObject *parent) :
     QThread(parent)
@@ -38,11 +35,12 @@ void Person::ReceiveRequest(int reqId, int reqDir) {
         }
     }
 
-    tRequests.push_back(reqId);
     if(!this->requests->contains(reqId)){
         this->requests->push_back(reqId);
     }
 
+    //Respond to requests if not waiting or in CS. Additionally, if the request is from
+    //this person instance and the person is waiting respond. (Respond when you ask yourself)
     if((!this->isInCS() && !this->mIsWaiting) || (this->mId == reqId && this->mIsWaiting)){
         this->respondToReq();
     }
@@ -104,13 +102,14 @@ bool Person::isInCS() {
     m.unlock();
 
     return tB;
-
 }
+
 //Request the CS from all other people
 void Person::requestCS() {
     if(!this->isInCS() && !this->mIsWaiting){
         this->mIsWaiting = true;
 
+        //Populate awk vector with the id's of people present in the system.
         for(int i = 0; i<PEOPLE_TOTAL; i++){
             this->awks->push_back(i);
         }
@@ -120,7 +119,7 @@ void Person::requestCS() {
 
 //Accept awk from process
 void Person::receiveAwk(int awkId) {
-    tAwks.push_back(awkId);
+    //Remove the awk id from the awk vector if it is present.
     if(!this->awks->isEmpty()) {
         int temp = this->awks->indexOf(awkId);
         if(temp != -1){
