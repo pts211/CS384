@@ -74,6 +74,7 @@ void Widget::on_rd_Two_toggled(bool checked)
 
 void Widget::on_slider_speed_sliderMoved(int speed)
 {
+    //needs to get speed as well as the slider that is moved.
     Person::SPEED = speed;
     ui->lbl_speed->setText("Update Speed: " + QString("%1").arg(speed) + " ms");
 }
