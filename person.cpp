@@ -22,7 +22,6 @@ Person::Person(int tId, QPoint pos, QObject *parent) :
     this->isWaiting = false;
     this->position = pos;
     this->points = GLOBAL_POINTS;
-    this->setDir();
     this->speed = SPEED;
     this->stop = false;
     this->requests = new QVector<int>();
@@ -55,39 +54,6 @@ void Person::ReceiveRequest(int reqId, QPoint reqMovement) {
 
 
 //-------------------- FUNCTIONS Start --------------------
-
-//void Person::findSomethingAboutPoints() {
-void Person::setMovement() {
-
-    foreach(QPoint a, points) {
-        int nextIndex = 0;
-        if( a != points.last() ) {
-            nextIndex = points.indexOf(a) + 1;
-        }
-        QPoint b = points.at(nextIndex);
-
-        if(a == position) {
-            //TODO Evaluate what happens at a point. (Certain point #'s trigger the requrests to the
-            // CS and all that.
-            evaluatePoint(a);
-        }
-        else if(a.x() == b.x() && a.x() == position.x()) {
-            if(position.y() > a.y() && position.y() < b.y()) {
-                movement = QPoint(0, 1);
-            }else if(position.y() < a.y() && position.y() > b.y()) {
-                movement = QPoint(0, -1);
-            }
-        }else if(a.y() == b.y() && a.y() == position.y()) {
-            if(position.x() > a.x() && position.x() < b.x()) {
-                movement = QPoint(1, 0);
-            }else if(position.x() < a.x() && position.x() > b.x()) {
-                movement = QPoint(-1, 0);
-            }
-        }
-
-    }
-
-}
 void Person::run() {
 
     while(!this->stop)
@@ -104,41 +70,35 @@ void Person::run() {
         }
 
     }
-
-    /*
-    this->stop = false;
-    this->inCS = true;
-
-    this->setDir(); //Determine the direction of travel.
-
-    //Using the direction run the correct for-loop to travel
-    //the appropriate direction.
-    for(int i=MIN_X; i<MAX_X; i++) {
-        QMutex mutex;
-        mutex.lock();
-        if(this->stop) break;
-        mutex.unlock();
-
-        this->position += QPoint(this->direction, 0);
-
-        emit this->ChangePosition(this->id, movement);
-        mutex.lock();
-        this->msleep(this->speed);
-        mutex.unlock();
-    }
-    this->inCS = false;
-    this->setDir();
-    this->respondToReq();
-    */
 }
 
-int Person::getDir() {
-    QMutex m;
-    m.lock();
-    int tD = this->direction;
-    m.unlock();
+//This might not be needed at all. It is possible we could just use the evaluatePoint() method if we are smart about it.
+//Oh well, better safe than sorrry!
+void Person::setMovement() {
+    foreach(QPoint a, points) {
+        int nextIndex = 0;
+        if( a != points.last() ) {
+            nextIndex = points.indexOf(a) + 1;
+        }
+        QPoint b = points.at(nextIndex);
 
-    return tD;
+        if(a == position) {
+            evaluatePoint(a);
+        }
+        else if(a.x() == b.x() && a.x() == position.x()) {
+            if(position.y() > a.y() && position.y() < b.y()) {
+                movement = QPoint(0, 1);
+            }else if(position.y() < a.y() && position.y() > b.y()) {
+                movement = QPoint(0, -1);
+            }
+        }else if(a.y() == b.y() && a.y() == position.y()) {
+            if(position.x() > a.x() && position.x() < b.x()) {
+                movement = QPoint(1, 0);
+            }else if(position.x() < a.x() && position.x() > b.x()) {
+                movement = QPoint(-1, 0);
+            }
+        }
+    }
 }
 
 void Person::evaluatePoint(QPoint c) {
@@ -188,15 +148,6 @@ void Person::evaluatePoint(QPoint c) {
             break;
     }
 }
-
-void Person::setDir() {
-    if(this->position.x() == MIN_X) {
-        this->direction = 1;
-    }else if(this->position.x() == MAX_X) {
-        this->direction = -1;
-    }
-}
-
 int Person::getSpeed() const
 {
     return this->speed;

@@ -2,16 +2,12 @@
 //CS 384 Project
 //Algorithm Runner.cpp
 //This class serves as a worker thread and manages execution of the algorithm.
-
-
 #include "algorithmrunner.h"
-
 
 
 AlgorithmRunner::AlgorithmRunner(QVector<QGraphicsEllipseItem*> tCircleList, QObject *uiParent) :
     QThread()
 {
-    mIsRandom = true;
     for(QGraphicsEllipseItem *c : tCircleList){
         QPoint pos = QPoint(c->rect().x(), c->rect().y());
         people.push_back(new Person(tCircleList.indexOf(c), pos, this));
@@ -47,54 +43,15 @@ void AlgorithmRunner::onSpeedChange(int id, int speed) {
 
 //-------------------- SLOTS End --------------------
 
-//-------------------- SIGNALS Start --------------------
 
-//-------------------- SIGNALS End --------------------
 
 //-------------------- FUNCTIONS Start --------------------
-/*
-void AlgorithmRunner::run() {
-    QVector<int> indexes;
-    for(int j=0; j<people.size(); j++){ indexes.push_back(j); }
-
-    QVector<int> randomInd;
-    if(this->mIsRandom){
-        randomInd = this->randomize(indexes);
-    }else {
-        randomInd = indexes;
-    }
-
-    for(int i=0; i<this->people.size(); i++){
-        int temp = randomInd[i];
-        this->people[temp]->requestCS();
-        this->msleep(5);
-    }
-}
-*/
 void AlgorithmRunner::run() {
     foreach(Person *p, people) {
         p->start();
     }
-
-//    for(int i=0; i<this->people.size(); i++){
-//        int temp = randomInd[i];
-//        this->people[temp]->requestCS();
-//        this->msleep(5);
-//    }
 }
 
-QVector<int> AlgorithmRunner::randomize(QVector<int> ind) {
-    qsrand(QTime::currentTime().msec());
-    QVector<int> tVec;
-
-    int origSize = ind.size();
-    for(int i=0; i<origSize; i++){
-        int rindex = rangedRand(ind.size());
-        tVec.push_back(ind[rindex]);
-        ind.removeAt(rindex);
-    }
-    return tVec;
-}
 QVector<QPoint> AlgorithmRunner::getPoints()
 {
     return points;

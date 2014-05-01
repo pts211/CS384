@@ -127,14 +127,6 @@ void Widget::on_rd_Two_toggled(bool checked)
         Person::ALG_MODE = 2;
     }
 }
-//-------------------- BUTTONS End --------------------
-
-
-Widget::~Widget()
-{
-    delete ui;
-}
-
 
 void Widget::on_slider_speed_1_valueChanged(int speed)
 {
@@ -158,4 +150,11 @@ void Widget::on_slider_speed_4_valueChanged(int speed)
 {
     emit ChangeSpeed(3, speed);
     ui->lbl_speed_4->setText("Yellow Speed: " + QString("%1").arg(ui->slider_speed_4->value()));
+}
+//-------------------- BUTTONS End --------------------
+
+
+Widget::~Widget()
+{
+    delete ui;
 }

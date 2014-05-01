@@ -6,15 +6,9 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-//#include <QRunnable>
 #include <QThread>
 #include <QVector>
 #include <QPoint>
-
-//global variables.
-//The minimum and maxium x coordinates for the person to be displayed in the UI.
-const int MIN_X = 0;
-const int MAX_X = 400;
 
 class Person : public QThread
 {
@@ -24,7 +18,6 @@ public:
     static int ALG_MODE;
     static int SPEED;
     int id;
-    int direction;
     int speed;
     QPoint position;
     QPoint movement;
@@ -47,9 +40,6 @@ public:
     void run();
 
     //getters and setters 
-    int getDir();
-    void setDir();
-
     int getSpeed() const;
     void setSpeed(int value);
 
@@ -70,7 +60,14 @@ public:
     void respondToReq();
 
     QPoint getMovement();
+
+    //POST: Sets the movement variable to state which direction (up, down, left, right) the
+    //person needs to be moving to get to the next point of teh track.
     void setMovement();
+
+    //PRE: The point of the track that the person is currently.
+    //POST: If the point is the entry to the bridge (or exit) take special
+    //actions, otherwise, set the movement direction and cross like normal.
     void evaluatePoint(QPoint c);
 
 
@@ -98,8 +95,6 @@ public slots:
     //POST: pushes items on the stack that recive the request if something
     //is already in the CS 
     void ReceiveRequest(int, QPoint);
-
-
 };
 
 #endif // PERSON_H

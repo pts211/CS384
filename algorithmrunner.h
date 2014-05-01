@@ -27,26 +27,12 @@ public:
     //POST: Thread to manage running the algorithm.
     void run();
 
-    //PRE: there exists a bool.
-    //POST, Random process movement is enable dor disabled.
-    void setRandom(bool isRandom) { this->mIsRandom = isRandom; }
-
     QVector<QPoint> getPoints();
     void setPoints(QVector<QPoint> value);
 
 private:
-    bool mIsRandom;
     QVector<Person*> people; //pointer to the people vector.
-
-    //PRE: there exists a vector of numbers
-    //POST the vector is randomized
-    QVector<int> randomize(QVector<int> ind);
-
-    //pre, there exists a variable max,
-    //post: random number is generated between 0 and max.
-    int rangedRand(unsigned int max) { return (qrand() % (max)); }
-
-    QVector<QPoint> points;
+    QVector<QPoint> points; //The points of the "track"
 
 public slots:
     //The following two functions are slot functions, they are executed when a corresponding signal is received.
