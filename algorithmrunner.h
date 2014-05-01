@@ -31,9 +31,12 @@ public:
     //POST, Random process movement is enable dor disabled.
     void setRandom(bool isRandom) { this->mIsRandom = isRandom; }
 
+    QVector<QPoint> getPoints();
+    void setPoints(QVector<QPoint> value);
+
 private:
     bool mIsRandom;
-    QVector<Person*> people; //pointer to the people vector. 
+    QVector<Person*> people; //pointer to the people vector.
 
     //PRE: there exists a vector of numbers
     //POST the vector is randomized
@@ -42,6 +45,8 @@ private:
     //pre, there exists a variable max,
     //post: random number is generated between 0 and max.
     int rangedRand(unsigned int max) { return (qrand() % (max)); }
+
+    QVector<QPoint> points;
 
 public slots:
     //The following two functions are slot functions, they are executed when a corresponding signal is received.
@@ -53,6 +58,10 @@ public slots:
     //PRE: there exists two ints, and id and a request id.
     //POST: acknowledgement is sent to the person with reqId from id.
     void onSendAwk(int, int);
+
+    //PRE: There exists a person with the id specified
+    //POST: the speed of the person is set to speed.
+    void onSpeedChange(int id, int speed);
 
 private slots:
 

@@ -18,19 +18,21 @@ AlgorithmRunner::AlgorithmRunner(QVector<QGraphicsEllipseItem*> tCircleList, QOb
     }
     Person::PEOPLE_TOTAL = people.size();
 
+    connect(uiParent, SIGNAL(ChangeSpeed(int,int)), this, SLOT(onSpeedChange(int,int)));
+
     for(Person *p1 : people){
         //Configure each person's one-to-one signals and slots.
         connect(p1, SIGNAL(SendAwk(int,int)), this, SLOT(onSendAwk(int,int)));
         connect(p1, SIGNAL(EnterCS(int)), this, SLOT(onEnterCS(int)));
-        connect(p1, SIGNAL(ChangePosition(int,int)), uiParent, SLOT(onChangePosition(int,int)));
+        connect(p1, SIGNAL(ChangePosition(int,QPoint)), uiParent, SLOT(onChangePosition(int,QPoint)));
         for(Person *p2 : people){
             //Configure each person's one-to-many signals and slots.
-            connect(p1, SIGNAL(SendRequest(int,int)), p2, SLOT(ReceiveRequest(int,int)));
+            connect(p1, SIGNAL(SendRequest(int,QPoint)), p2, SLOT(ReceiveRequest(int,QPoint)));
         }
     }
 }
 
-//-------------------- SIGNALS Start --------------------
+//-------------------- SLOTS Start --------------------
 void AlgorithmRunner::onSendAwk(int id, int reqId) {
     people[reqId]->receiveAwk(id);
 }
@@ -38,9 +40,19 @@ void AlgorithmRunner::onSendAwk(int id, int reqId) {
 void AlgorithmRunner::onEnterCS(int id) {
     people[id]->start();
 }
+
+void AlgorithmRunner::onSpeedChange(int id, int speed) {
+    people[id]->setSpeed(speed);
+}
+
+//-------------------- SLOTS End --------------------
+
+//-------------------- SIGNALS Start --------------------
+
 //-------------------- SIGNALS End --------------------
 
 //-------------------- FUNCTIONS Start --------------------
+/*
 void AlgorithmRunner::run() {
     QVector<int> indexes;
     for(int j=0; j<people.size(); j++){ indexes.push_back(j); }
@@ -58,6 +70,18 @@ void AlgorithmRunner::run() {
         this->msleep(5);
     }
 }
+*/
+void AlgorithmRunner::run() {
+    foreach(Person *p, people) {
+        p->start();
+    }
+
+//    for(int i=0; i<this->people.size(); i++){
+//        int temp = randomInd[i];
+//        this->people[temp]->requestCS();
+//        this->msleep(5);
+//    }
+}
 
 QVector<int> AlgorithmRunner::randomize(QVector<int> ind) {
     qsrand(QTime::currentTime().msec());
@@ -71,5 +95,15 @@ QVector<int> AlgorithmRunner::randomize(QVector<int> ind) {
     }
     return tVec;
 }
+QVector<QPoint> AlgorithmRunner::getPoints()
+{
+    return points;
+}
+
+void AlgorithmRunner::setPoints(QVector<QPoint> value)
+{
+    points = value;
+}
+
 
 

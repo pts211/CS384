@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>424</height>
+    <width>1193</width>
+    <height>738</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,16 +21,16 @@
     <rect>
      <x>15</x>
      <y>11</y>
-     <width>571</width>
-     <height>331</height>
+     <width>1161</width>
+     <height>541</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_start">
    <property name="geometry">
     <rect>
-     <x>14</x>
-     <y>350</y>
+     <x>320</x>
+     <y>560</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -42,8 +42,8 @@
   <widget class="QRadioButton" name="rd_Ricart">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>356</y>
+     <x>746</x>
+     <y>566</y>
      <width>141</width>
      <height>16</height>
     </rect>
@@ -58,8 +58,8 @@
   <widget class="QRadioButton" name="rd_Two">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>376</y>
+     <x>746</x>
+     <y>586</y>
      <width>82</width>
      <height>16</height>
     </rect>
@@ -68,11 +68,11 @@
     <string>Two-by-Two</string>
    </property>
   </widget>
-  <widget class="QSlider" name="slider_speed">
+  <widget class="QSlider" name="slider_speed_1">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>360</y>
+     <x>520</x>
+     <y>570</y>
      <width>171</width>
      <height>21</height>
     </rect>
@@ -81,23 +81,26 @@
     <number>1</number>
    </property>
    <property name="maximum">
-    <number>100</number>
+    <number>10</number>
    </property>
    <property name="singleStep">
-    <number>5</number>
+    <number>1</number>
+   </property>
+   <property name="pageStep">
+    <number>1</number>
    </property>
    <property name="value">
-    <number>5</number>
+    <number>2</number>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_speed">
+  <widget class="QLabel" name="lbl_speed_1">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>380</y>
+     <x>520</x>
+     <y>590</y>
      <width>171</width>
      <height>20</height>
     </rect>
@@ -109,20 +112,136 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QCheckBox" name="chk_random">
+  <widget class="QSlider" name="slider_speed_2">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>400</y>
-     <width>70</width>
-     <height>17</height>
+     <x>520</x>
+     <y>610</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>10</number>
+   </property>
+   <property name="singleStep">
+    <number>1</number>
+   </property>
+   <property name="pageStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>4</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_speed_2">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>630</y>
+     <width>171</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Random?</string>
+    <string>TextLabel</string>
    </property>
-   <property name="checked">
-    <bool>true</bool>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_speed_3">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>670</y>
+     <width>171</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_speed_3">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>650</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>10</number>
+   </property>
+   <property name="singleStep">
+    <number>5</number>
+   </property>
+   <property name="pageStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>6</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_speed_4">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>710</y>
+     <width>171</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider_speed_4">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>690</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>10</number>
+   </property>
+   <property name="singleStep">
+    <number>5</number>
+   </property>
+   <property name="pageStep">
+    <number>1</number>
+   </property>
+   <property name="value">
+    <number>8</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
  </widget>

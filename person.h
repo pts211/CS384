@@ -23,13 +23,16 @@ public:
     static int PEOPLE_TOTAL;
     static int ALG_MODE;
     static int SPEED;
-    int mId;
-    int mDirection;
-    int mSpeed;
-    QPoint mPosition;
-    bool mInCS;
-    bool mIsWaiting;
-    bool mStop;
+    int id;
+    int direction;
+    int speed;
+    QPoint position;
+    QPoint movement;
+    bool inCS;
+    bool isWaiting;
+    bool stop;
+
+    QVector<QPoint> points;
 
     //Vector for acknowledgements. This vector is populated when the person requests the CS.
     //As awks are received the vector items are removed. When it is empty all awks have been recieved.
@@ -47,6 +50,9 @@ public:
     int getDir();
     void setDir();
 
+    int getSpeed() const;
+    void setSpeed(int value);
+
     //PRE: none
     //POST: tells if person is in the CS
     bool isInCS();
@@ -62,15 +68,21 @@ public:
     //PRE:None
     //POST: Request the CS from all other people
     void respondToReq();
+
+    QPoint getMovement();
+    void setMovement();
+    void evaluatePoint(QPoint c);
+
+
 signals:
 
     //PRE: The person is in the CS and moving.
     //POST: The persons position is changed in the UI.
-    void ChangePosition(int, int);
+    void ChangePosition(int, QPoint);
 
     //PRE: The person wants to enter the CS.
     //post: Requests are sent to all other people. Requests contain the requestor's ID and desired direction.
-    void SendRequest(int,int);
+    void SendRequest(int, QPoint);
 
     //PRE: two integers exists
     //POST: acknowledgements are sent. 
@@ -85,7 +97,7 @@ public slots:
     //PRE: there exists a requiredID and a required Direction
     //POST: pushes items on the stack that recive the request if something
     //is already in the CS 
-    void ReceiveRequest(int,int);
+    void ReceiveRequest(int, QPoint);
 
 
 };
