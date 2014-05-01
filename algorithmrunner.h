@@ -26,8 +26,8 @@ public:
     //POST: Thread to manage running the algorithm.
     void run();
 
-    QVector<QPoint> getPoints() { return points; }
-    void setPoints(QVector<QPoint> value) { points = value; }
+    QVector<QPoint> getPoints() { return points; } //getter
+    void setPoints(QVector<QPoint> value) { points = value; } //setter
 
 private:
     QVector<Person*> people; //pointer to the people vector.

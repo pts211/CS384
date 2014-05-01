@@ -20,6 +20,7 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
+    //Setting p the sliders for the widget
     ui->setupUi(this);
     ui->lbl_speed_1->setText("Red Speed: " + QString("%1").arg(ui->slider_speed_1->value()));
     ui->lbl_speed_2->setText("Green Speed: " + QString("%1").arg(ui->slider_speed_2->value()));
@@ -30,7 +31,7 @@ Widget::Widget(QWidget *parent) :
     scene = new QGraphicsScene(0, 0, ui->graphicsView->width()-2, ui->graphicsView->height()-2);
     ui->graphicsView->setScene(scene);
 
-
+    //Creating colors.
     QBrush redBrush(Qt::red);
     QBrush greenBrush(Qt::green);
     QBrush blueBrush(Qt::blue);
@@ -68,7 +69,7 @@ Widget::Widget(QWidget *parent) :
     circles.push_back(scene->addEllipse(985 +O_X, 200 +O_Y, CSIZE, CSIZE, blackpen, yellowBrush));
 
 }
-
+//Creates the lines for the "bridge"
 void Widget::drawLines() {
 
     QPen blackpen(Qt::black);
@@ -102,7 +103,6 @@ QVector<QGraphicsEllipseItem*> Widget::getCircleList() {
 void Widget::setRunner(AlgorithmRunner *tAR){
     this->mAR = tAR;
     this->mAR->setPoints(this->points);
-    //connect(this, SIGNAL(ChangeSpeed(int,int)),this->mAR, SLOT(onChangeSpeed(int,int)));
     on_slider_speed_1_valueChanged(ui->slider_speed_1->value());
     on_slider_speed_2_valueChanged(ui->slider_speed_2->value());
     on_slider_speed_3_valueChanged(ui->slider_speed_3->value());
@@ -141,6 +141,7 @@ void Widget::on_rd_Two_toggled(bool checked)
     }
 }
 
+//Functions that change the speed for the different people crossing the bridge
 void Widget::on_slider_speed_1_valueChanged(int speed)
 {
     emit ChangeSpeed(0, speed);

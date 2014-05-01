@@ -15,6 +15,7 @@ class Person : public QThread
     Q_OBJECT
 public:
     static int PEOPLE_TOTAL;
+
     //Algorithm Mode: 1 for Ricart and Agrawalas; 2 for "Two-by-Two"
     static int ALG_MODE;
     static int SPEED;
@@ -70,6 +71,7 @@ public:
     //POST: Request the CS from all other people
     void respondToReq();
 
+     //PRE: None
     //POST: Sets the movement variable to state which direction (up, down, left, right) the
     //      person needs to be moving to get to the next point of the track.
     void setMovement();
