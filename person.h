@@ -15,11 +15,17 @@ class Person : public QThread
     Q_OBJECT
 public:
     static int PEOPLE_TOTAL;
+    //Algorithm Mode: 1 for Ricart and Agrawalas; 2 for "Two-by-Two"
     static int ALG_MODE;
     static int SPEED;
+
     int id;
     int speed;
+    QPoint initialPosition;
     QPoint position;
+
+    //A point with x,y each equal to +/- 1 or 0 to specify which
+    //direction the person is moving.
     QPoint movement;
     bool inCS;
     bool isWaiting;
@@ -37,11 +43,16 @@ public:
 
     explicit Person(int id, QPoint pos, QObject *parent = 0);
 
+    //The thread that is executed when the algorithm is running. Moves the person.
     void run();
 
+    //Resets the person back to his original starting position and stops the thread.
+    void reset();
+
     //getters and setters 
-    int getSpeed() const;
-    void setSpeed(int value);
+    int getSpeed() const { return this->speed; }
+    void setSpeed(int value) { this->speed = value; }
+    QPoint getMovement(){ return this->movement; }
 
     //PRE: none
     //POST: tells if person is in the CS
@@ -59,42 +70,41 @@ public:
     //POST: Request the CS from all other people
     void respondToReq();
 
-    QPoint getMovement();
-
     //POST: Sets the movement variable to state which direction (up, down, left, right) the
-    //person needs to be moving to get to the next point of teh track.
+    //      person needs to be moving to get to the next point of the track.
     void setMovement();
 
     //PRE: The point of the track that the person is currently.
     //POST: If the point is the entry to the bridge (or exit) take special
-    //actions, otherwise, set the movement direction and cross like normal.
+    //      actions, otherwise, set the movement direction and cross like normal.
     void evaluatePoint(QPoint c);
 
-
 signals:
+    //The following are signal prototypes. Signals are emitted and received by
+    //connected slots.
 
-    //PRE: The person is in the CS and moving.
+    //PRE: The person has moved update the UI.
     //POST: The persons position is changed in the UI.
     void ChangePosition(int, QPoint);
 
-    //PRE: The person wants to enter the CS.
-    //post: Requests are sent to all other people. Requests contain the requestor's ID and desired direction.
+    //PRE: The person wants to enter the CS (cross the bridge).
+    //post: Requests are sent to all other people. Requests contain the requestor's ID and desired movement.
     void SendRequest(int, QPoint);
 
-    //PRE: two integers exists
+    //PRE: Two integers exist that represent the function being awknowledged and the function
+    //      who needs to receive the awk.
     //POST: acknowledgements are sent. 
     void SendAwk(int, int);
-
-
-    //PRE: there exists the id of a person that wants to enter ths cs
-    //POST: THe person enters the cs
-    void EnterCS(int);
 
 public slots:
     //PRE: there exists a requiredID and a required Direction
     //POST: pushes items on the stack that recive the request if something
     //is already in the CS 
     void ReceiveRequest(int, QPoint);
+
+    //POST: The person is reset back to the initial position and the thread is stopped.
+    //      The user can then start the simulation again.
+    void onReset();
 };
 
 #endif // PERSON_H

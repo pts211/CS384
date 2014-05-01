@@ -7,11 +7,14 @@
 #include <QtCore>
 
 int Person::PEOPLE_TOTAL(0);
-int Person::ALG_MODE(1);
 int Person::SPEED(5);
+
 //ALG_MODE=1 : Ricart
 //ALG_MODE=2 : Two-by-Two
+int Person::ALG_MODE(1);
 
+//A global containing all of the points of the "track", formally
+//declared in widget.cpp.
 extern QVector<QPoint> GLOBAL_POINTS;
 
 Person::Person(int tId, QPoint pos, QObject *parent) :
@@ -20,6 +23,7 @@ Person::Person(int tId, QPoint pos, QObject *parent) :
     this->id = tId;
     this->inCS = false;
     this->isWaiting = false;
+    this->initialPosition = pos;
     this->position = pos;
     this->points = GLOBAL_POINTS;
     this->speed = SPEED;
@@ -46,7 +50,25 @@ void Person::ReceiveRequest(int reqId, QPoint reqMovement) {
     if((!this->isInCS() && !this->isWaiting) || (this->id == reqId && this->isWaiting)){
         this->respondToReq();
     }
+}
 
+void Person::onReset() {
+    QMutex mutex;
+    mutex.lock();
+    this->stop = true;
+    mutex.unlock();
+
+    this->inCS = false;
+    this->isWaiting = false;
+    this->requests = new QVector<int>();
+    this->awks = new QVector<int>();
+
+    QPoint moveBy;
+    moveBy.setX(this->initialPosition.x() - this->position.x());
+    moveBy.setY(this->initialPosition.y() - this->position.y());
+    emit this->ChangePosition(this->id, moveBy);
+
+    this->position += moveBy;
 }
 
 //-------------------- SLOTS End --------------------
@@ -55,6 +77,7 @@ void Person::ReceiveRequest(int reqId, QPoint reqMovement) {
 
 //-------------------- FUNCTIONS Start --------------------
 void Person::run() {
+    this->stop = false;
 
     while(!this->stop)
     {
@@ -68,7 +91,6 @@ void Person::run() {
             this->msleep(this->speed);
             mutex.unlock();
         }
-
     }
 }
 
@@ -148,20 +170,6 @@ void Person::evaluatePoint(QPoint c) {
             break;
     }
 }
-int Person::getSpeed() const
-{
-    return this->speed;
-}
-
-void Person::setSpeed(int value)
-{
-    this->speed = value;
-}
-
-QPoint Person::getMovement()
-{
-    return this->movement;
-}
 
 bool Person::isInCS() {
     QMutex m;
@@ -197,7 +205,6 @@ void Person::receiveAwk(int awkId) {
     if(this->awks->isEmpty()) {
         this->isWaiting = false;
         this->inCS = true;
-        //emit this->EnterCS(this->id);
     }
 }
 

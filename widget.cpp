@@ -115,7 +115,16 @@ void Widget::setRunner(AlgorithmRunner *tAR){
 //-------------------- BUTTONS Start --------------------
 void Widget::on_btn_start_clicked()
 {
+    ui->btn_start->setEnabled(false);
+    ui->btn_reset->setEnabled(true);
     mAR->start();
+}
+
+void Widget::on_btn_reset_clicked()
+{
+    ui->btn_start->setEnabled(true);
+    ui->btn_reset->setEnabled(false);
+    emit Reset();
 }
 
 void Widget::on_rd_Ricart_toggled(bool checked)
@@ -131,7 +140,6 @@ void Widget::on_rd_Two_toggled(bool checked)
         Person::ALG_MODE = 2;
     }
 }
-
 
 void Widget::on_slider_speed_1_valueChanged(int speed)
 {

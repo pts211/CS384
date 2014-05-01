@@ -21,25 +21,20 @@ public:
     //PRE: there exists a circle List, as well as a ui object
     //POST: the process of the algorithm is completed. 
     explicit AlgorithmRunner(QVector<QGraphicsEllipseItem*> tCircleList, QObject *uiParent);
-    
 
     //PRE: none
     //POST: Thread to manage running the algorithm.
     void run();
 
-    QVector<QPoint> getPoints();
-    void setPoints(QVector<QPoint> value);
+    QVector<QPoint> getPoints() { return points; }
+    void setPoints(QVector<QPoint> value) { points = value; }
 
 private:
     QVector<Person*> people; //pointer to the people vector.
     QVector<QPoint> points; //The points of the "track"
 
 public slots:
-    //The following two functions are slot functions, they are executed when a corresponding signal is received.
-
-    //PRE: there exists an int, id.
-    //POST: the person with supplied id enters the CS.
-    void onEnterCS(int);
+    //The following are slot functions, they are executed when a connected signal is received.
 
     //PRE: there exists two ints, and id and a request id.
     //POST: acknowledgement is sent to the person with reqId from id.
@@ -49,9 +44,6 @@ public slots:
     //POST: the speed of the person is set to speed.
     void onSpeedChange(int id, int speed);
 
-private slots:
-
-    //NONE
 };
 
 #endif // ALGORITHMRUNNER_H

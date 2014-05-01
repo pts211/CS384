@@ -30,42 +30,13 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>560</y>
-     <width>91</width>
-     <height>31</height>
+     <y>580</y>
+     <width>101</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
     <string>Start</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="rd_Ricart">
-   <property name="geometry">
-    <rect>
-     <x>746</x>
-     <y>566</y>
-     <width>141</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Ricart and Agrawalas</string>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="rd_Two">
-   <property name="geometry">
-    <rect>
-     <x>746</x>
-     <y>586</y>
-     <width>82</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Two-by-Two</string>
    </property>
   </widget>
   <widget class="QSlider" name="slider_speed_1">
@@ -243,6 +214,64 @@
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
+  </widget>
+  <widget class="QPushButton" name="btn_reset">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>650</y>
+     <width>101</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>580</y>
+     <width>251</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Algorithms:</string>
+   </property>
+   <widget class="QRadioButton" name="rd_Ricart">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>40</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ricart and Agrawalas</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rd_Two">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>80</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Two-by-Two</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

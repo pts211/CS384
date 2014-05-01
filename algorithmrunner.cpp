@@ -19,8 +19,8 @@ AlgorithmRunner::AlgorithmRunner(QVector<QGraphicsEllipseItem*> tCircleList, QOb
     for(Person *p1 : people){
         //Configure each person's one-to-one signals and slots.
         connect(p1, SIGNAL(SendAwk(int,int)), this, SLOT(onSendAwk(int,int)));
-        connect(p1, SIGNAL(EnterCS(int)), this, SLOT(onEnterCS(int)));
         connect(p1, SIGNAL(ChangePosition(int,QPoint)), uiParent, SLOT(onChangePosition(int,QPoint)));
+        connect(uiParent, SIGNAL(Reset()), p1, SLOT(onReset()));
         for(Person *p2 : people){
             //Configure each person's one-to-many signals and slots.
             connect(p1, SIGNAL(SendRequest(int,QPoint)), p2, SLOT(ReceiveRequest(int,QPoint)));
@@ -33,16 +33,11 @@ void AlgorithmRunner::onSendAwk(int id, int reqId) {
     people[reqId]->receiveAwk(id);
 }
 
-void AlgorithmRunner::onEnterCS(int id) {
-    people[id]->start();
-}
-
 void AlgorithmRunner::onSpeedChange(int id, int speed) {
     people[id]->setSpeed(speed);
 }
 
 //-------------------- SLOTS End --------------------
-
 
 
 //-------------------- FUNCTIONS Start --------------------
@@ -52,15 +47,6 @@ void AlgorithmRunner::run() {
     }
 }
 
-QVector<QPoint> AlgorithmRunner::getPoints()
-{
-    return points;
-}
 
-void AlgorithmRunner::setPoints(QVector<QPoint> value)
-{
-    points = value;
-}
-
-
+//-------------------- FUNCTIONS End --------------------
 

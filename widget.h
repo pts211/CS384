@@ -29,8 +29,10 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
+    //Retrieve a list of the circles that represent people.
     QVector<QGraphicsEllipseItem*> getCircleList();
 
+    //Associate an instance of the Algorithm Runner object.
     void setRunner(AlgorithmRunner *tAR);
 
 private:
@@ -41,6 +43,7 @@ private:
 
     AlgorithmRunner *mAR;
 
+    //Create all of the lines in the scene. (Draws the track).
     void drawLines();
 
 signals:
@@ -48,9 +51,8 @@ signals:
     //POST: The persons speed is changed.
     void ChangeSpeed(int, int);
 
-    //PRE: The person wants to enter the CS.
-    //post: Requests are sent to all other people. Requests contain the requestor's ID and desired direction.
-    void SendRequest(int,int);
+    //POST:
+    void Reset();
 
 public slots:
     //PRE: A person id, the amount to shift the person.
@@ -65,6 +67,7 @@ private slots:
     void on_slider_speed_2_valueChanged(int value);
     void on_slider_speed_3_valueChanged(int value);
     void on_slider_speed_4_valueChanged(int value);
+    void on_btn_reset_clicked();
 };
 
 #endif // WIDGET_H
