@@ -103,6 +103,10 @@ void Widget::setRunner(AlgorithmRunner *tAR){
     this->mAR = tAR;
     this->mAR->setPoints(this->points);
     //connect(this, SIGNAL(ChangeSpeed(int,int)),this->mAR, SLOT(onChangeSpeed(int,int)));
+    on_slider_speed_1_valueChanged(ui->slider_speed_1->value());
+    on_slider_speed_2_valueChanged(ui->slider_speed_2->value());
+    on_slider_speed_3_valueChanged(ui->slider_speed_3->value());
+    on_slider_speed_4_valueChanged(ui->slider_speed_4->value());
 }
 
 //-------------------- FUNCTIONS End --------------------
@@ -127,6 +131,7 @@ void Widget::on_rd_Two_toggled(bool checked)
         Person::ALG_MODE = 2;
     }
 }
+
 
 void Widget::on_slider_speed_1_valueChanged(int speed)
 {
