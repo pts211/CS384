@@ -20,7 +20,7 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
-    //Setting p the sliders for the widget
+    //Setting up the sliders for the widget
     ui->setupUi(this);
     ui->lbl_speed_1->setText("Red Speed: " + QString("%1").arg(ui->slider_speed_1->value()));
     ui->lbl_speed_2->setText("Green Speed: " + QString("%1").arg(ui->slider_speed_2->value()));
